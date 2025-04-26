@@ -4,12 +4,24 @@ import os
 from groq import Groq
 import tempfile
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
 import logging
+from PIL import Image
+import io
+import sys
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,  # Show all log levels
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)  # Print to terminal
+    ]
+)
 logger = logging.getLogger(__name__)
+
+# Log startup message
+logger.info("Starting Medical Transcription Application...")
 
 # Load environment variables
 load_dotenv()
@@ -28,7 +40,8 @@ except Exception as e:
 
 # Initialize Gemini
 try:
-    genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
+    geminiClient = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+
 except Exception as e:
     logger.error(f"Failed to initialize Gemini: {str(e)}")
 
@@ -47,14 +60,43 @@ def transcribe_audio(audio_file_path):
             logger.error("Audio file is empty")
             return None
 
-        # Create a generative model
-        model = genai.GenerativeModel('gemini-pro-vision')
+        logger.debug(f"Read {len(audio_data)} bytes from audio file")
+
+        # Create a generative model with the correct configuration
+        # generation_config = {
+        #     "temperature": 0.4,
+        #     "top_p": 1,
+        #     "top_k": 32,
+        #     "max_output_tokens": 4096,
+        # }
+
+        # model = genai.GenerativeModel(
+        #     model_name="gemini-2.0-flash",
+        #     generation_config=generation_config
+        # )
         
         # Create the prompt for transcription
-        prompt = "Please transcribe this audio recording into text. Focus on medical terminology and patient information."
+        prompt = """You are a medical transcription assistant. Please transcribe the following audio recording into text. 
+        Focus on medical terminology and patient information. Format the transcription in a clear, organized manner.
+        Include any relevant medical terms, symptoms, and observations."""
+        
+        # Convert audio data to a format Gemini can understand
+        audio_blob = {
+            'mime_type': 'audio/mp4',
+            'data': audio_data
+        }
+
+        
+        response = client.models.generate_content(
+            model="gemini-2.0-flash", contents=["Describe this audio clip", audio_blob]
+        )
         
         # Generate the transcription
-        response = model.generate_content([prompt, audio_data])
+        # response = model.generate_content([prompt, audio_blob])
+
+        # print the response for debugging purposes 
+        print(response)
+    
         
         if not response.text:
             logger.error("Empty response from Gemini")
@@ -90,7 +132,7 @@ def summarize_text(text):
                     "content": f"Please create a structured medical note from this text: {text}"
                 }
             ],
-            model="mixtral-8x7b-32768",
+            model="llama-3.3-70b-versatile",
             temperature=0.7,
         )
         
@@ -137,6 +179,12 @@ def process_audio():
             transcribed_text = transcribe_audio(temp_audio_path)
             if not transcribed_text:
                 return jsonify({'success': False, 'error': 'Failed to transcribe audio'})
+
+            # Print transcribed text to terminal
+            print("\nTranscribed Text:")
+            print("----------------")
+            print(transcribed_text)
+            print("----------------\n")
 
             # Summarize text
             summary = summarize_text(transcribed_text)
