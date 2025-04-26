@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+styleguide.css
+>>>>>>> 33a93cb4c09553bd2ee01de036d839e414f86583
 :root {
   --body-strong-font-family: "Inter", Helvetica;
   --body-strong-font-weight: 600;
@@ -19,6 +23,7 @@
   --color-primitives-white-1000: rgba(255, 255, 255, 1);
 }
 
+<<<<<<< HEAD
 /*
 
 To enable a theme in your HTML, simply add one of the following data attributes to an HTML element, like so:
@@ -38,3 +43,6 @@ You can apply the theme on any DOM node, not just the `body`
 [data-color-mode="SDS-dark"] {
   --color-text-default-default: var(--color-primitives-white-1000);
 }
+=======
+/*
+>>>>>>> 33a93cb4c09553bd2ee01de036d839e414f86583

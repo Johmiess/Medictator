@@ -1,168 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Note Recorder</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .recording-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .record-btn {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        .record-btn:hover {
-            background-color: #c0392b;
-        }
-        .record-btn.recording {
-            background-color: #2c3e50;
-        }
-        .summary-section {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            display: none;
-        }
-        .summary-section h2 {
-            color: #2c3e50;
-            margin-bottom: 15px;
-        }
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 20px 0;
-        }
-        .error-message {
-            color: #e74c3c;
-            text-align: center;
-            margin: 10px 0;
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Medical Note Recorder</h1>
-        
-        <div class="recording-section">
-            <button id="recordButton" class="record-btn">Start Recording</button>
-            <p id="recordingStatus">Click to start recording</p>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../static/globals.css" />
+    <link rel="stylesheet" href="../static/styleguide.css" />
+    <link rel="stylesheet" href="../static/styles.css" />
+  </head>
+  <body>
+    <div class="desktop">
+      <div class="div">
+        <div class="frame">
+          <div class="mask-group-main-boi-wrapper">
+            <img class="mask-group-main-boi" src="../static/img/maskgroupmainboi.png" />
+          </div>
+          <div class="group">
+            <div class="text-wrapper">Llama Rama</div>
+            <div class="text-wrapper-2">Age: 24</div>
+            <div class="text-wrapper-3">Sex: M</div>
+          </div>
+          <div class="overlap-group-wrapper">
+            <div class="overlap-group">
+              <div class="rectangle"></div>
+              <div class="text-wrapper-4">Pending</div>
+              <div class="ellipse"></div>
+            </div>
+          </div>
         </div>
-
-        <div class="loading" id="loadingIndicator">
-            Processing your recording...
+        <div class="group-wrapper">
+          <div class="group-2">
+            <div class="text-wrapper">Subjective</div>
+            <div class="rectangle-2"></div>
+          </div>
         </div>
-
-        <div class="error-message" id="errorMessage"></div>
-
-        <div class="summary-section" id="summarySection">
-            <h2>Medical Note Summary</h2>
-            <div id="summaryContent"></div>
+        <div class="div-wrapper">
+          <div class="group-2">
+            <div class="text-wrapper">Objective</div>
+            <div class="rectangle-2"></div>
+          </div>
         </div>
+        <div class="frame-2">
+          <div class="group-2">
+            <div class="text-wrapper">Assessment</div>
+            <div class="rectangle-2"></div>
+          </div>
+        </div>
+        <div class="frame-3">
+          <div class="group-2">
+            <div class="text-wrapper">Plan</div>
+            <div class="rectangle-2"></div>
+          </div>
+        </div>
+        <div class="frame-4">
+          <div class="text-wrapper-5">Patient History</div>
+          <div class="lab-button-wrapper">
+            <div class="lab-button">
+              <div class="overlap-group-2">
+                <div class="text-wrapper-6">Lab</div>
+                <img class="info" src="../static/img/info.png" />
+              </div>
+            </div>
+          </div>
+          <div class="rectangle-3"></div>
+        </div>
+        <div class="group-3">
+          <div class="frame-wrapper">
+            <div class="frame-5">
+              <div class="frame-6">
+                <div class="microphone-wrapper"><img class="microphone" src="../static/img/microphone.png" /></div>
+              </div>
+              <div class="frame-7">
+                <div class="rectangle-4"></div>
+                <div class="rectangle-5"></div>
+              </div>
+              <div class="download-from-the-wrapper">
+                <img class="download-from-the" src="../static/img/downloadfromthecloud.png" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="overlap-wrapper">
+          <div class="overlap">
+            <div class="group-4">
+              <div class="llama-co-wrapper"><div class="llama-co">Llama &amp; Co.</div></div>
+            </div>
+            <div class="group-5">
+              <img class="home" src="../static/img/home.png" />
+              <img class="bookmark" src="../static/img/bookmark.png" />
+              <img class="doorbell" src="../static/img/doorbell.png" />
+              <img class="mask-group-user-boi" src="../static/img/maskgroupuserboi.png" />
+            </div>
+          </div>
+        </div>
+        <div class="group-6">
+          <div class="frame-8">
+            <div class="group-7">
+              <div class="overlap-group-3">
+                <div class="llama-co-2">Llama &amp; Co.</div>
+                <div class="title">
+                  <div class="button-list">
+                    <img class="x-logo" src="../static/img/xlogo.svg" />
+                    <img class="img" src="../static/img/logoinstagram.svg" />
+                    <img class="img" src="../static/img/logoyoutube.svg" />
+                    <img class="img" src="../static/img/linkedin.svg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-link-list">
+              <div class="text-strong-wrapper">
+                <div class="text-strong"><div class="text-strong-2">Use cases</div></div>
+              </div>
+              <div class="text-link-list-item"><div class="list-item">UI design</div></div>
+              <div class="text-link-list-item"><div class="list-item">UX design</div></div>
+              <div class="text-link-list-item"><div class="list-item">Wireframing</div></div>
+              <div class="text-link-list-item"><div class="list-item">Diagramming</div></div>
+              <div class="text-link-list-item"><div class="list-item">Brainstorming</div></div>
+              <div class="text-link-list-item"><div class="list-item">Online whiteboard</div></div>
+              <div class="text-link-list-item"><div class="list-item">Team collaboration</div></div>
+            </div>
+            <div class="text-link-list">
+              <div class="text-strong-wrapper">
+                <div class="text-strong"><div class="text-strong-2">Explore</div></div>
+              </div>
+              <div class="text-link-list-item"><div class="list-item">Design</div></div>
+              <div class="text-link-list-item"><div class="list-item">Prototyping</div></div>
+              <div class="text-link-list-item"><div class="list-item">Development features</div></div>
+              <div class="text-link-list-item"><div class="list-item">Design systems</div></div>
+              <div class="text-link-list-item"><div class="list-item">Collaboration features</div></div>
+              <div class="text-link-list-item"><div class="list-item">Design process</div></div>
+              <div class="text-link-list-item"><div class="list-item">FigJam</div></div>
+            </div>
+            <div class="text-link-list">
+              <div class="text-strong-wrapper">
+                <div class="text-strong"><div class="text-strong-2">Resources</div></div>
+              </div>
+              <div class="text-link-list-item"><div class="list-item">Blog</div></div>
+              <div class="text-link-list-item"><div class="list-item">Best practices</div></div>
+              <div class="text-link-list-item"><div class="list-item">Colors</div></div>
+              <div class="text-link-list-item"><div class="list-item">Color wheel</div></div>
+              <div class="text-link-list-item"><div class="list-item">Support</div></div>
+              <div class="text-link-list-item"><div class="list-item">Developers</div></div>
+              <div class="text-link-list-item"><div class="list-item">Resource library</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <script>
-        let mediaRecorder;
-        let audioChunks = [];
-        const recordButton = document.getElementById('recordButton');
-        const recordingStatus = document.getElementById('recordingStatus');
-        const loadingIndicator = document.getElementById('loadingIndicator');
-        const errorMessage = document.getElementById('errorMessage');
-        const summarySection = document.getElementById('summarySection');
-        const summaryContent = document.getElementById('summaryContent');
-
-        recordButton.addEventListener('click', async () => {
-            if (!mediaRecorder || mediaRecorder.state === 'inactive') {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    mediaRecorder = new MediaRecorder(stream);
-                    
-                    mediaRecorder.ondataavailable = (event) => {
-                        audioChunks.push(event.data);
-                    };
-
-                    mediaRecorder.onstop = async () => {
-                        const audioBlob = new Blob(audioChunks, { type: 'audio/mp4' });
-                        await sendAudioToServer(audioBlob);
-                        audioChunks = [];
-                    };
-
-                    mediaRecorder.start();
-                    recordButton.textContent = 'Stop Recording';
-                    recordButton.classList.add('recording');
-                    recordingStatus.textContent = 'Recording in progress...';
-                } catch (err) {
-                    showError('Error accessing microphone: ' + err.message);
-                }
-            } else {
-                mediaRecorder.stop();
-                recordButton.textContent = 'Start Recording';
-                recordButton.classList.remove('recording');
-                recordingStatus.textContent = 'Processing recording...';
-            }
-        });
-
-        async function sendAudioToServer(audioBlob) {
-            const formData = new FormData();
-            formData.append('audio', audioBlob, 'recording.mp4');
-
-            try {
-                loadingIndicator.style.display = 'block';
-                errorMessage.style.display = 'none';
-
-                const response = await fetch('/process-audio', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    summaryContent.innerHTML = data.summary.replace(/\n/g, '<br>');
-                    summarySection.style.display = 'block';
-                } else {
-                    showError(data.error || 'Error processing audio');
-                }
-            } catch (err) {
-                showError('Error sending audio to server: ' + err.message);
-            } finally {
-                loadingIndicator.style.display = 'none';
-                recordingStatus.textContent = 'Click to start recording';
-            }
-        }
-
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-            summarySection.style.display = 'none';
-        }
-    </script>
-</body>
-</html> 
+  </body>
+</html>
