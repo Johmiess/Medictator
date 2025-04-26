@@ -312,6 +312,21 @@
     top: 10px;
     left: 10px;
   }
+  #recordButton.recording {
+      background: #e74c3c;
+      box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+  }
+  #recordButton::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: white;
+  }
+  #recordButton.recording::before{
+      background: #e74c3c;
+      box-shadow: 0 0 0 2px white;
+  }
   
   .desktop .frame-7 {
     display: inline-flex;
