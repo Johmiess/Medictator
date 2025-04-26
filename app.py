@@ -22,7 +22,7 @@ class Patient(db.Model):
         return f"Task {self.id}"
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('newpage.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
