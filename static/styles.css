@@ -1,0 +1,575 @@
+.desktop {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.desktop .div {
+  background-color: #ffffff;
+  width: 1440px;
+  height: 2783px;
+  position: relative;
+}
+
+.desktop .frame {
+  display: flex;
+  width: 579px;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  position: absolute;
+  top: 125px;
+  left: 60px;
+}
+
+.desktop .mask-group-main-boi-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 186px;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+}
+
+.desktop .mask-group-main-boi {
+  position: relative;
+  width: 186px;
+  height: 179px;
+}
+
+.desktop .group {
+  position: relative;
+  width: 204px;
+  height: 98px;
+}
+
+.desktop .text-wrapper {
+  top: 0;
+  left: 0;
+  font-family: "Kanit-Regular", Helvetica;
+  font-weight: 400;
+  position: absolute;
+  color: #000000;
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.desktop .text-wrapper-2 {
+  position: absolute;
+  top: 62px;
+  left: 2px;
+  font-family: "Kanit-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.desktop .text-wrapper-3 {
+  position: absolute;
+  top: 62px;
+  left: 99px;
+  font-family: "Kanit-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.desktop .overlap-group-wrapper {
+  position: relative;
+  width: 153px;
+  height: 36px;
+  margin-right: -2.00px;
+}
+
+.desktop .overlap-group {
+  position: relative;
+  width: 151px;
+  height: 36px;
+}
+
+.desktop .rectangle {
+  position: absolute;
+  width: 151px;
+  height: 33px;
+  top: 2px;
+  left: 0;
+  background-color: #d9d9d9;
+  border-radius: 29px;
+}
+
+.desktop .text-wrapper-4 {
+  position: absolute;
+  top: 0;
+  left: 43px;
+  font-family: "Kanit-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 24px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.desktop .ellipse {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  top: 10px;
+  left: 15px;
+  background-color: #deff27;
+  border-radius: 8.5px;
+}
+
+.desktop .group-wrapper {
+  display: flex;
+  width: 1192px;
+  height: 303px;
+  align-items: flex-start;
+  justify-content: space-around;
+  gap: 10px;
+  position: absolute;
+  top: 868px;
+  left: 116px;
+}
+
+.desktop .group-2 {
+  position: relative;
+  width: 1194px;
+  height: 303px;
+  margin-right: -2.00px;
+}
+
+.desktop .rectangle-2 {
+  position: absolute;
+  width: 1192px;
+  height: 233px;
+  top: 70px;
+  left: 0;
+  background-color: #b6b8b940;
+  border-radius: 14px;
+}
+
+.desktop .div-wrapper {
+  display: flex;
+  width: 1192px;
+  height: 303px;
+  align-items: flex-start;
+  justify-content: space-around;
+  gap: 10px;
+  position: absolute;
+  top: 1225px;
+  left: 117px;
+}
+
+.desktop .frame-2 {
+  display: flex;
+  width: 1192px;
+  height: 303px;
+  align-items: flex-start;
+  justify-content: space-around;
+  gap: 10px;
+  position: absolute;
+  top: 1582px;
+  left: 117px;
+}
+
+.desktop .frame-3 {
+  display: flex;
+  width: 1192px;
+  height: 303px;
+  align-items: flex-start;
+  justify-content: space-around;
+  gap: 10px;
+  position: absolute;
+  top: 1939px;
+  left: 117px;
+}
+
+.desktop .frame-4 {
+  display: flex;
+  flex-wrap: wrap;
+  width: 1192px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 17px 776px;
+  position: absolute;
+  top: 494px;
+  left: 116px;
+}
+
+.desktop .text-wrapper-5 {
+  position: relative;
+  width: fit-content;
+  font-family: "Kanit-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.desktop .lab-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 175px;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+}
+
+.desktop .lab-button {
+  position: relative;
+  width: 177px;
+  height: 70px;
+  margin-right: -2.00px;
+}
+
+.desktop .overlap-group-2 {
+  position: relative;
+  width: 175px;
+  height: 70px;
+  background-color: #cec5ef;
+  border-radius: 29px;
+}
+
+.desktop .text-wrapper-6 {
+  position: absolute;
+  top: 8px;
+  left: 29px;
+  font-family: "Kanit-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.desktop .info {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 10px;
+  left: 105px;
+}
+
+.desktop .rectangle-3 {
+  position: relative;
+  width: 1192px;
+  height: 233px;
+  background-color: #b6b8b940;
+  border-radius: 14px;
+}
+
+.desktop .group-3 {
+  position: absolute;
+  width: 1203px;
+  height: 121px;
+  top: 343px;
+  left: 106px;
+}
+
+.desktop .frame-wrapper {
+  height: 121px;
+}
+
+.desktop .frame-5 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 19px;
+  position: relative;
+}
+
+.desktop .frame-6 {
+  display: flex;
+  width: 121px;
+  height: 121px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  position: relative;
+}
+
+.desktop .microphone-wrapper {
+  position: relative;
+  width: 101px;
+  height: 101px;
+  background-color: #d9d9d9;
+  border-radius: 24px;
+}
+
+.desktop .microphone {
+  position: absolute;
+  width: 81px;
+  height: 81px;
+  top: 10px;
+  left: 10px;
+}
+
+.desktop .frame-7 {
+  display: inline-flex;
+  height: 36px;
+  align-items: center;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.desktop .rectangle-4 {
+  position: relative;
+  width: 5px;
+  height: 36px;
+  background-color: #d9d9d9;
+}
+
+.desktop .rectangle-5 {
+  position: relative;
+  width: 938px;
+  height: 9px;
+  background-color: #000000;
+}
+
+.desktop .download-from-the-wrapper {
+  display: flex;
+  width: 101px;
+  height: 101px;
+  align-items: center;
+  gap: 10px;
+  padding: 17px;
+  position: relative;
+  background-color: #d9d9d9;
+  border-radius: 24px;
+}
+
+.desktop .download-from-the {
+  position: relative;
+  width: 67px;
+  height: 67px;
+}
+
+.desktop .overlap-wrapper {
+  position: absolute;
+  width: 1440px;
+  height: 100px;
+  top: 0;
+  left: 0;
+}
+
+.desktop .overlap {
+  position: relative;
+  width: 1442px;
+  height: 100px;
+}
+
+.desktop .group-4 {
+  position: absolute;
+  width: 1442px;
+  height: 100px;
+  top: 0;
+  left: 0;
+}
+
+.desktop .llama-co-wrapper {
+  position: relative;
+  width: 1440px;
+  height: 100px;
+  background-color: #c2e6ff;
+}
+
+.desktop .llama-co {
+  top: 23px;
+  left: 32px;
+  font-family: "Kanit-Bold", Helvetica;
+  font-weight: 700;
+  position: absolute;
+  color: #000000;
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.desktop .group-5 {
+  position: absolute;
+  width: 319px;
+  height: 75px;
+  top: 15px;
+  left: 1103px;
+}
+
+.desktop .home {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 14px;
+  left: 0;
+}
+
+.desktop .bookmark {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  top: 20px;
+  left: 88px;
+}
+
+.desktop .doorbell {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 15px;
+  left: 161px;
+}
+
+.desktop .mask-group-user-boi {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  top: 0;
+  left: 244px;
+}
+
+.desktop .group-6 {
+  position: absolute;
+  width: 1440px;
+  height: 318px;
+  top: 2465px;
+  left: 0;
+  background-color: #c2e6ff;
+}
+
+.desktop .frame-8 {
+  display: flex;
+  width: 1237px;
+  align-items: flex-end;
+  justify-content: space-between;
+  position: relative;
+  top: 21px;
+  left: 101px;
+}
+
+.desktop .group-7 {
+  position: relative;
+  width: 264px;
+  height: 189.54px;
+}
+
+.desktop .overlap-group-3 {
+  position: relative;
+  width: 262px;
+  height: 190px;
+}
+
+.desktop .llama-co-2 {
+  position: absolute;
+  width: 192px;
+  top: 0;
+  left: 0;
+  font-family: "Kanit-Bold", Helvetica;
+  font-weight: 700;
+  color: #000000;
+  font-size: 36px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.desktop .title {
+  display: flex;
+  flex-direction: column;
+  width: 262px;
+  align-items: flex-start;
+  gap: var(--size-space-600);
+  position: absolute;
+  top: 62px;
+  left: 0;
+}
+
+.desktop .button-list {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-space-400);
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.desktop .x-logo {
+  position: relative;
+  width: 23.98px;
+  height: 24px;
+}
+
+.desktop .img {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.desktop .text-link-list {
+  display: flex;
+  flex-direction: column;
+  width: 262px;
+  align-items: flex-start;
+  gap: var(--size-space-300);
+  position: relative;
+}
+
+.desktop .text-strong-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0px 0px var(--size-space-400) 0px;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.desktop .text-strong {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.desktop .text-strong-2 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: var(--body-strong-font-family);
+  font-weight: var(--body-strong-font-weight);
+  color: var(--color-text-default-default);
+  font-size: var(--body-strong-font-size);
+  letter-spacing: var(--body-strong-letter-spacing);
+  line-height: var(--body-strong-line-height);
+  white-space: nowrap;
+  font-style: var(--body-strong-font-style);
+}
+
+.desktop .text-link-list-item {
+  position: relative;
+  width: 89px;
+  height: 22px;
+}
+
+.desktop .list-item {
+  position: absolute;
+  height: 22px;
+  top: -1px;
+  left: 0;
+  font-family: var(--body-base-font-family);
+  font-weight: var(--body-base-font-weight);
+  color: var(--color-text-default-default);
+  font-size: var(--body-base-font-size);
+  letter-spacing: var(--body-base-letter-spacing);
+  line-height: var(--body-base-line-height);
+  white-space: nowrap;
+  font-style: var(--body-base-font-style);
+}
