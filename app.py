@@ -152,25 +152,38 @@ def home():
             return render_template('homepage.html', patients=patients, error=f"Error: {error_message}")
     else:
         patients = Patient.query.order_by(Patient.date.desc()).all()
-        return render_template('homepage.html', patients=patients)
+        return render_template('patientpage.html', patients=patients)
 
 
 @app.route('/upload', methods=['POST'])
 
 def upload_file():
+    print('BACKEDN REACHED:Uploading file to server')
     if 'audio' not in request.files:
+        print('No file part')
         return jsonify({'error': 'No file part'}), 400
     
     file = request.files['audio']
     if file.filename == '':
+        print('No selected file')
         return jsonify({'error': 'No selected file'}), 400
     
     # Generate unique filename with timestamp
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     filename = f'recording_{timestamp}.mp3'
-    file.save(os.path.join(UPLOAD_FOLDER, filename))
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+    file.save(file_path)
     
-    return jsonify({'success': True, 'filename': filename})
+    # Transcribe the audio
+    print('Transcribing audio')
+    transcription = transcribe_audio(file_path)
+    print('Transcription complete')
+    
+    return jsonify({
+        'success': True, 
+        'filename': filename,
+        'transcription': transcription
+    })
 
 @app.route('/transcribe', methods=['POST'])
 def handle_transcription():
@@ -244,6 +257,7 @@ def patient(id):
             if "UNIQUE constraint failed: patient.medical_id" in error_message:
                 return jsonify({"error": f"Medical ID is already in use by another patient"}), 400
             return jsonify({"error": error_message}), 500
+
 
 if __name__ == '__main__':
     with app.app_context():
