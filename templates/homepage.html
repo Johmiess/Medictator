@@ -10,7 +10,7 @@
     <div class="desktop">
       <nav class="navbar">
         <div class="navbar-container">
-          <div class="logo">Llama &amp; Co.</div>
+          <a href="/" class="logo">Medictator</a>
           <div class="nav-icons">
             <a href="#" class="nav-link">
               <img class="nav-icon" src="../static/img/maskgroupuserboi.png" alt="Profile" />
@@ -23,7 +23,7 @@
         <div class="content-wrapper">
           <!-- Sidebar -->
           <div class="sidebar">
-            <form action="/" method="POST" class="form-section">
+            <form action="/dashboard" method="POST" class="form-section">
               {% if error %}
               <div class="error-message">
                 {{ error }}
@@ -224,5 +224,6 @@
         }, 7000);
       });
     </script>
+    <script src="{{ url_for('static', filename='js/loading.js') }}"></script>
   </body>
 </html>

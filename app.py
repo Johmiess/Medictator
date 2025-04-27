@@ -113,7 +113,11 @@ def create_sample_patients():
         print("Sample patients created successfully")
     
 #Home Page Routes
-@app.route('/', methods=["POST","GET"])
+@app.route('/', methods=["GET"])
+def landing():
+    return render_template('landing.html')
+
+@app.route('/dashboard', methods=["POST","GET"])
 def home():
     #Add a patient
     if request.method == "POST":
@@ -150,7 +154,7 @@ def home():
         try:
             db.session.add(new_patient)
             db.session.commit()
-            return redirect("/")
+            return redirect("/dashboard")
         except Exception as e:
             db.session.rollback()
             error_message = str(e)
@@ -281,6 +285,9 @@ def patient(id):
                 return jsonify({"error": f"Medical ID is already in use by another patient"}), 400
             return jsonify({"error": error_message}), 500
 
+@app.route('/loading-content', methods=["GET"])
+def loading_content():
+    return render_template('loading.html')
 
 if __name__ == '__main__':
     with app.app_context():
