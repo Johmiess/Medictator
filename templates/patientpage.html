@@ -2,160 +2,382 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/globals.css" />
     <link rel="stylesheet" href="../static/styleguide.css" />
     <link rel="stylesheet" href="../static/patientpagestyles.css" />
   </head>
   <body>
     <div class="desktop">
-      <div class="div">
-        <div class="frame">
-          <div class="mask-group-main-boi-wrapper">
-            <img class="mask-group-main-boi" src="../static/img/maskgroupmainboi.png" />
+      <div class="container">
+        <!-- Patient header section -->
+        <div class="patient-header">
+          <div class="profile-img-wrapper">
+            <img class="profile-img" src="../static/img/maskgroupmainboi.png" />
           </div>
-          <div class="group">
-            <div class="text-wrapper">Llama Rama</div>
-            <div class="text-wrapper-2">Age: 24</div>
-            <div class="text-wrapper-3">Sex: M</div>
+          <div class="patient-info">
+            <div class="heading" id="patient-name-display">{{ patient.name }}</div>
+            <input type="text" class="text-input patient-name-input" id="patient-name-input" value="{{ patient.name }}" style="display: none;">
+            
+            <div class="subheading" id="patient-medical-id-display">Medical ID: {{ patient.medical_id or 'Not assigned' }}</div>
+            <div class="patient-medical-id-input-container" style="display: none;">
+              <label for="patient-medical-id-input">Medical ID: </label>
+              <input type="text" class="text-input patient-medical-id-input" id="patient-medical-id-input" value="{{ patient.medical_id or '' }}" placeholder="e.g. MED123456">
+            </div>
+            
+            <div class="subheading" id="patient-age-display">Age: {{ patient.age }}</div>
+            <div class="patient-age-input-container" style="display: none;">
+              <label for="patient-age-input">Age: </label>
+              <input type="number" class="text-input patient-age-input" id="patient-age-input" value="{{ patient.age }}">
+            </div>
+            
+            <div class="subheading" id="patient-sex-display">Sex: {{ patient.sex }}</div>
+            <div class="patient-sex-input-container" style="display: none;">
+              <label for="patient-sex-input">Sex: </label>
+              <select class="text-input patient-sex-input" id="patient-sex-input">
+                <option value="Male" {% if patient.sex == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Female" {% if patient.sex == 'Female' %}selected{% endif %}>Female</option>
+                <option value="Other" {% if patient.sex == 'Other' %}selected{% endif %}>Other</option>
+              </select>
+            </div>
           </div>
-          <div class="overlap-group-wrapper">
-            <div class="overlap-group">
-              <div class="rectangle"></div>
-              <div class="text-wrapper-4">Pending</div>
-              <div class="ellipse"></div>
+          <div class="status-wrapper">
+            <div class="status-badge" id="status-display-container">
+              <div class="status-bg"></div>
+              <div class="status-text">{{ patient.status }}</div>
+              <div class="status-indicator status-{{ patient.status.lower() }}"></div>
             </div>
           </div>
         </div>
-        <div class="group-wrapper">
-          <div class="group-2">
-            <div class="text-wrapper">Subjective</div>
-            <div class="rectangle-2">
-              <textarea id="subjective" class="transcription-area"></textarea>
+        <!-- Combined Action Bar and Voice Recording Section -->
+        <div class="combined-control-bar">
+          <div class="recorder-section">
+            <div class="recorder-controls">
+              <button class="mic-button" id="recordButton">
+                <img class="mic-icon" src="../static/img/microphone.png" />
+              </button>
+              <div class="recording-indicator">Recording...</div>
+            </div>
+            <div class="waveform">
+              <div class="waveform-bar waveform-bar-1"></div>
+              <div class="waveform-bar waveform-bar-2"></div>
+            </div>
+          </div>
+          <div class="control-section">
+            <div class="status-selector" id="status-selector">
+              <label for="status-change">Status:</label>
+              <select id="status-change">
+                <option value="Pending" {% if patient.status == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="Completed" {% if patient.status == 'Completed' %}selected{% endif %}>Completed</option>
+                <option value="Updates" {% if patient.status == 'Updates' %}selected{% endif %}>Updates</option>
+              </select>
+            </div>
+            <div class="action-buttons">
+              <button id="edit-toggle-btn" class="action-btn edit-toggle-btn">Edit</button>
+              <button id="save-btn" class="action-btn save-btn">Save</button>
             </div>
           </div>
         </div>
-        <div class="div-wrapper">
-          <div class="group-2">
-            <div class="text-wrapper">Objective</div>
-            <div class="rectangle-2">
-              <textarea id="objective" class="transcription-area"></textarea>
-            </div>
+        
+        <!-- Patient History section -->
+        <div class="section-container">
+          <div class="heading">Patient History</div>
+          <div class="content-box" id="patient-history-notes">
+            {% if patient.history %}
+              {{ patient.history }}
+            {% endif %}
           </div>
         </div>
-        <div class="frame-2">
-          <div class="group-2">
-            <div class="text-wrapper">Assessment</div>
-            <div class="rectangle-2">
-              <textarea id="assessment" class="transcription-area"></textarea>
-            </div>
+        
+        <!-- SOAP Notes sections -->
+        <div class="section-container">
+          <div class="heading">Subjective</div>
+          <div class="content-box" id="subjective-notes">
+            {% if patient.notes %}
+              {{ patient.notes.split('||')[0] if '||' in patient.notes else '' }}
+            {% endif %}
           </div>
         </div>
-        <div class="frame-3">
-          <div class="group-2">
-            <div class="text-wrapper">Plan</div>
-            <div class="rectangle-2">
-              <textarea id="plan" class="transcription-area"></textarea>
-            </div>
+        <div class="section-container">
+          <div class="heading">Objective</div>
+          <div class="content-box" id="objective-notes">
+            {% if patient.notes %}
+              {{ patient.notes.split('||')[1] if '||' in patient.notes and patient.notes.split('||')|length > 1 else '' }}
+            {% endif %}
           </div>
         </div>
-        <div class="frame-4">
-          <div class="text-wrapper-5">Patient History</div>
-          <div class="lab-button-wrapper">
-            <div class="lab-button">
-              <div class="overlap-group-2">
-                <div class="text-wrapper-6">Lab</div>
-                <img class="info" src="../static/img/info.png" />
-              </div>
-            </div>
-          </div>
-          <div class="rectangle-3"></div>
-        </div>
-        <div class="group-3">
-          <div class="frame-wrapper">
-            <div class="frame-5">
-              <div class="frame-6">
-                <button class="microphone-wrapper" id="recordButton">
-                  <img class="microphone" src="../static/img/microphone.png" />
-                </button>
-              </div>
-              <div class="frame-7">
-                <div class="rectangle-4"></div>
-                <div class="rectangle-5"></div>
-              </div>
-              <div class="download-from-the-wrapper">
-                <img class="download-from-the" src="../static/img/downloadfromthecloud.png" />
-              </div>
-            </div>
+        <div class="section-container">
+          <div class="heading">Assessment</div>
+          <div class="content-box" id="assessment-notes">
+            {% if patient.notes %}
+              {{ patient.notes.split('||')[2] if '||' in patient.notes and patient.notes.split('||')|length > 2 else '' }}
+            {% endif %}
           </div>
         </div>
-        <div class="overlap-wrapper">
-          <div class="overlap">
-            <div class="group-4">
-              <div class="llama-co-wrapper"><div class="llama-co">Llama &amp; Co.</div></div>
-            </div>
-            <div class="group-5">
-              <img class="home" src="../static/img/home.png" />
-              <img class="bookmark" src="../static/img/bookmark.png" />
-              <img class="doorbell" src="../static/img/doorbell.png" />
-              <img class="mask-group-user-boi" src="../static/img/maskgroupuserboi.png" />
-            </div>
+        <div class="section-container">
+          <div class="heading">Plan</div>
+          <div class="content-box" id="plan-notes">
+            {% if patient.notes %}
+              {{ patient.notes.split('||')[3] if '||' in patient.notes and patient.notes.split('||')|length > 3 else '' }}
+            {% endif %}
           </div>
         </div>
-        <div class="group-6">
-          <div class="frame-8">
-            <div class="group-7">
-              <div class="overlap-group-3">
-                <div class="llama-co-2">Llama &amp; Co.</div>
-                <div class="title">
-                  <div class="button-list">
-                    <img class="x-logo" src="../static/img/xlogo.svg" />
-                    <img class="img" src="../static/img/logoinstagram.svg" />
-                    <img class="img" src="../static/img/logoyoutube.svg" />
-                    <img class="img" src="../static/img/linkedin.svg" />
+        
+        <!-- Navbar -->
+        <nav class="navbar">
+          <div class="navbar-container">
+            <a href="/" class="logo">Llama &amp; Co.</a>
+            <div class="nav-icons">
+              <a href="#" class="nav-link">
+                <img class="nav-icon" src="../static/img/maskgroupuserboi.png" alt="Profile" />
+              </a>
+            </div>
+          </div>
+        </nav>
+        
+        
+        
+        <!-- Footer -->
+        <div class="footer">
+          <div class="footer-content">
+            <div class="footer-brand">
+              <div class="footer-logo">
+                <div class="logo-text">Llama &amp; Co.</div>
+                <div class="social-icons">
+                  <div class="social-icon-list">
+                    <img class="social-icon" src="../static/img/xlogo.svg" />
+                    <img class="social-icon" src="../static/img/logoinstagram.svg" />
+                    <img class="social-icon" src="../static/img/logoyoutube.svg" />
+                    <img class="social-icon" src="../static/img/linkedin.svg" />
                   </div>
                 </div>
               </div>
             </div>
-            <div class="text-link-list">
-              <div class="text-strong-wrapper">
-                <div class="text-strong"><div class="text-strong-2">Use cases</div></div>
+            <div class="footer-links">
+              <div class="footer-links-column">
+                <div class="column-heading">Use cases</div>
+                <div class="footer-link">UI design</div>
+                <div class="footer-link">UX design</div>
+                <div class="footer-link">Wireframing</div>
+                <div class="footer-link">Diagramming</div>
+                <div class="footer-link">Brainstorming</div>
+                <div class="footer-link">Online whiteboard</div>
+                <div class="footer-link">Team collaboration</div>
               </div>
-              <div class="text-link-list-item"><div class="list-item">UI design</div></div>
-              <div class="text-link-list-item"><div class="list-item">UX design</div></div>
-              <div class="text-link-list-item"><div class="list-item">Wireframing</div></div>
-              <div class="text-link-list-item"><div class="list-item">Diagramming</div></div>
-              <div class="text-link-list-item"><div class="list-item">Brainstorming</div></div>
-              <div class="text-link-list-item"><div class="list-item">Online whiteboard</div></div>
-              <div class="text-link-list-item"><div class="list-item">Team collaboration</div></div>
-            </div>
-            <div class="text-link-list">
-              <div class="text-strong-wrapper">
-                <div class="text-strong"><div class="text-strong-2">Explore</div></div>
+              <div class="footer-links-column">
+                <div class="column-heading">Explore</div>
+                <div class="footer-link">Design</div>
+                <div class="footer-link">Prototyping</div>
+                <div class="footer-link">Development features</div>
+                <div class="footer-link">Design systems</div>
+                <div class="footer-link">Collaboration features</div>
+                <div class="footer-link">Design process</div>
+                <div class="footer-link">FigJam</div>
               </div>
-              <div class="text-link-list-item"><div class="list-item">Design</div></div>
-              <div class="text-link-list-item"><div class="list-item">Prototyping</div></div>
-              <div class="text-link-list-item"><div class="list-item">Development features</div></div>
-              <div class="text-link-list-item"><div class="list-item">Design systems</div></div>
-              <div class="text-link-list-item"><div class="list-item">Collaboration features</div></div>
-              <div class="text-link-list-item"><div class="list-item">Design process</div></div>
-              <div class="text-link-list-item"><div class="list-item">FigJam</div></div>
-            </div>
-            <div class="text-link-list">
-              <div class="text-strong-wrapper">
-                <div class="text-strong"><div class="text-strong-2">Resources</div></div>
+              <div class="footer-links-column">
+                <div class="column-heading">Resources</div>
+                <div class="footer-link">Blog</div>
+                <div class="footer-link">Best practices</div>
+                <div class="footer-link">Colors</div>
+                <div class="footer-link">Color wheel</div>
+                <div class="footer-link">Support</div>
+                <div class="footer-link">Developers</div>
+                <div class="footer-link">Resource library</div>
               </div>
-              <div class="text-link-list-item"><div class="list-item">Blog</div></div>
-              <div class="text-link-list-item"><div class="list-item">Best practices</div></div>
-              <div class="text-link-list-item"><div class="list-item">Colors</div></div>
-              <div class="text-link-list-item"><div class="list-item">Color wheel</div></div>
-              <div class="text-link-list-item"><div class="list-item">Support</div></div>
-              <div class="text-link-list-item"><div class="list-item">Developers</div></div>
-              <div class="text-link-list-item"><div class="list-item">Resource library</div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    
     <script src="../static/js/app.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const recordButton = document.getElementById('recordButton');
+        const waveform = document.querySelector('.waveform');
+        const patientId = "{{ patient.id }}";
+        let editMode = false;
+        let isRecording = false;
+        
+        // Recording functionality
+        recordButton.addEventListener('click', function() {
+          isRecording = !isRecording;
+          const recorderControls = document.querySelector('.recorder-controls');
+          
+          if (isRecording) {
+            // Start recording - add animation classes
+            recordButton.classList.add('recording');
+            waveform.classList.add('recording');
+            recorderControls.classList.add('recording');
+            
+            // You would add actual recording functionality here
+            console.log('Recording started');
+            
+          } else {
+            // Stop recording - remove animation classes
+            recordButton.classList.remove('recording');
+            waveform.classList.remove('recording');
+            recorderControls.classList.remove('recording');
+            
+            // You would handle stopping recording here
+            console.log('Recording stopped');
+          }
+        });
+        
+        // Patient info elements
+        const nameDisplay = document.getElementById('patient-name-display');
+        const nameInput = document.getElementById('patient-name-input');
+        const medicalIdDisplay = document.getElementById('patient-medical-id-display');
+        const medicalIdInputContainer = document.querySelector('.patient-medical-id-input-container');
+        const medicalIdInput = document.getElementById('patient-medical-id-input');
+        const ageDisplay = document.getElementById('patient-age-display');
+        const ageInputContainer = document.querySelector('.patient-age-input-container');
+        const ageInput = document.getElementById('patient-age-input');
+        const sexDisplay = document.getElementById('patient-sex-display');
+        const sexInputContainer = document.querySelector('.patient-sex-input-container');
+        const sexInput = document.getElementById('patient-sex-input');
+        
+        // SOAP notes and Patient History elements
+        const patientHistory = document.getElementById('patient-history-notes');
+        const subjective = document.getElementById('subjective-notes');
+        const objective = document.getElementById('objective-notes');
+        const assessment = document.getElementById('assessment-notes');
+        const plan = document.getElementById('plan-notes');
+        
+        // Status selectors
+        const statusDisplay = document.querySelector('.status-text');
+        const statusSelector = document.getElementById('status-selector');
+        const statusChange = document.getElementById('status-change');
+        
+        // Toggle edit mode button
+        const editToggleBtn = document.getElementById('edit-toggle-btn');
+        
+        // Set initial editability state for SOAP notes and Patient History (read-only initially)
+        [patientHistory, subjective, objective, assessment, plan].forEach(element => {
+          element.contentEditable = false;
+        });
+        
+        // Toggle edit mode
+        editToggleBtn.addEventListener('click', function() {
+          editMode = !editMode;
+          
+          // Toggle display of inputs vs static text
+          if (editMode) {
+            // Switch to edit mode
+            nameDisplay.style.display = 'none';
+            nameInput.style.display = 'block';
+            medicalIdDisplay.style.display = 'none';
+            medicalIdInputContainer.style.display = 'block';
+            ageDisplay.style.display = 'none';
+            ageInputContainer.style.display = 'block';
+            sexDisplay.style.display = 'none';
+            sexInputContainer.style.display = 'block';
+            
+            // Make SOAP notes and Patient History editable
+            [patientHistory, subjective, objective, assessment, plan].forEach(element => {
+              element.contentEditable = true;
+              element.classList.add('editable');
+            });
+            
+            editToggleBtn.textContent = 'Exit Edit Mode';
+            editToggleBtn.classList.add('active');
+          } else {
+            // Switch back to display mode
+            nameDisplay.style.display = 'block';
+            nameInput.style.display = 'none';
+            medicalIdDisplay.style.display = 'block';
+            medicalIdInputContainer.style.display = 'none';
+            ageDisplay.style.display = 'block';
+            ageInputContainer.style.display = 'none';
+            sexDisplay.style.display = 'block';
+            sexInputContainer.style.display = 'none';
+            
+            // Make SOAP notes and Patient History non-editable
+            [patientHistory, subjective, objective, assessment, plan].forEach(element => {
+              element.contentEditable = false;
+              element.classList.remove('editable');
+            });
+            
+            editToggleBtn.textContent = 'Edit Patient Info';
+            editToggleBtn.classList.remove('active');
+          }
+        });
+        
+        // Save notes functionality
+        document.getElementById('save-btn').addEventListener('click', function() {
+          // Get values from inputs if in edit mode, otherwise use display values
+          const name = editMode ? nameInput.value : nameDisplay.textContent;
+          const medicalId = editMode ? medicalIdInput.value : medicalIdDisplay.textContent.replace('Medical ID: ', '');
+          const age = editMode ? ageInput.value : ageDisplay.textContent.replace('Age: ', '');
+          const sex = editMode ? sexInput.value : sexDisplay.textContent.replace('Sex: ', '');
+          
+          // Get Patient History
+          const history = patientHistory.innerText.trim();
+          
+          // Combine SOAP notes with separator (patientHistory is not part of SOAP)
+          const notes = [
+            subjective.innerText.trim(),
+            objective.innerText.trim(),
+            assessment.innerText.trim(),
+            plan.innerText.trim()
+          ].join('||');
+          
+          // Get selected status
+          const status = statusChange.value;
+          
+          // Send update to server
+          fetch(`/patient/${patientId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: name,
+              medical_id: medicalId === 'Not assigned' ? '' : medicalId,
+              age: age,
+              sex: sex,
+              notes: notes,
+              history: history,
+              status: status
+            })
+          })
+          .then(response => {
+            if (!response.ok) {
+              return response.json().then(data => {
+                throw new Error(data.error || 'Failed to update patient');
+              });
+            }
+            return response.json();
+          })
+          .then(data => {
+            if (data.success) {
+              alert('Patient updated successfully');
+              
+              // Update display elements with new values
+              nameDisplay.textContent = name;
+              medicalIdDisplay.textContent = `Medical ID: ${medicalId === 'Not assigned' ? 'Not assigned' : medicalId}`;
+              ageDisplay.textContent = `Age: ${age}`;
+              sexDisplay.textContent = `Sex: ${sex}`;
+              statusDisplay.innerText = status;
+              
+              // Update status dot class
+              const statusDot = document.querySelector('.status-indicator');
+              statusDot.className = 'status-indicator';
+              statusDot.classList.add(`status-${status.toLowerCase()}`);
+              
+              // If in edit mode, exit edit mode
+              if (editMode) {
+                editToggleBtn.click();
+              }
+            } else {
+              alert('Failed to update patient');
+            }
+          })
+          .catch(error => {
+            alert(error.message);
+          });
+        });
+      });
+    </script>
   </body>
 </html>
