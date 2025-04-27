@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime, UTC
+from gemini_transcriber import transcribe_audio
  
+load_dotenv()
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 db = SQLAlchemy(app)
@@ -25,6 +29,7 @@ def home():
     return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
+
 def upload_file():
     if 'audio' not in request.files:
         return jsonify({'error': 'No file part'}), 400
@@ -39,6 +44,27 @@ def upload_file():
     file.save(os.path.join(UPLOAD_FOLDER, filename))
     
     return jsonify({'success': True, 'filename': filename})
+
+@app.route('/transcribe', methods=['POST'])
+def handle_transcription():
+    # Get filename from JSON request
+    data = request.get_json()
+    if not data or 'filename' not in data:
+        return jsonify({'error': 'No filename provided'}), 400
+    
+    # Construct full file path
+    file_path = os.path.join(UPLOAD_FOLDER, data['filename'])
+    
+    # Check if file exists
+    if not os.path.exists(file_path):
+        return jsonify({'error': 'File not found'}), 404
+    
+    try:
+        # Use the transcribe_audio function from gemini_transcriber.py
+        transcription = transcribe_audio(file_path)
+        return jsonify({'transcription': transcription})
+    except Exception as e:
+        return jsonify({'error': f'Transcription failed: {str(e)}'}), 500
 
 if __name__ == '__main__':
     with app.app_context():
