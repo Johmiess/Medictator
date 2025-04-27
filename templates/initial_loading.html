@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../static/globals.css" />
-    <link rel="stylesheet" href="../static/loading.css" />
+    <link rel="stylesheet" href="../static/initial_loading.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -17,34 +17,32 @@
         </div>
         
         <div class="loading-container">
-            <h2 class="section-title">Processing Your Dictation</h2>
-            <p class="section-description">Please wait while we transcribe your medical notes...</p>
+            <h2 class="section-title">Welcome to Medicator</h2>
+            <p class="section-description">Your personal medical dictation assistant</p>
             
             <div class="loading-bar">
                 <div class="progress" id="progressBar"></div>
             </div>
-            <button class="start-button" id="startButton">Start Dictation</button>
         </div>
     </div>
     <script>
-        document.getElementById('startButton').addEventListener('click', function() {
+        // Start the loading animation automatically when the page loads
+        window.addEventListener('load', function() {
             const progressBar = document.getElementById('progressBar');
             progressBar.style.width = '0%';
-            
-            // Disable button while loading
-            this.disabled = true;
             
             // Simulate progress
             let width = 0;
             const interval = setInterval(() => {
                 if (width >= 100) {
                     clearInterval(interval);
-                    this.disabled = false;
+                    // Redirect to the main application page
+                    window.location.href = "{{ url_for('home') }}";
                 } else {
                     width++;
                     progressBar.style.width = width + '%';
                 }
-            }, 50); // Adjust speed by changing the interval (50ms)
+            }, 30); // Faster loading for initial entry
         });
     </script>
 </body>

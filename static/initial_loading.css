@@ -16,7 +16,7 @@
     width: 100%;
     height: 100%;
     background: url('../img/pattern.png');
-    opacity: 0.1;
+    opacity: 0.05;
     z-index: 0;
 }
 
@@ -90,33 +90,6 @@
     height: 100%;
     background: linear-gradient(90deg, #4CAF50, #45a049);
     transition: width 0.3s ease;
-}
-
-.start-button {
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
-    transition: background-color 0.3s ease;
-}
-
-.start-button:hover {
-    background: #45a049;
-}
-
-.start-button:active {
-    transform: scale(0.98);
-}
-
-.start-button:disabled {
-    background: #cccccc;
-    cursor: not-allowed;
-    transform: none;
 }
 
 @keyframes pulse {
