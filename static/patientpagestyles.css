@@ -170,6 +170,7 @@ body {
 .status-text {
   font-size: 1rem;
   font-weight: 600;
+  padding-right: .55rem;;
 }
 
 /* Status indicator colors */
