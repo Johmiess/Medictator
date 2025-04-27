@@ -152,7 +152,7 @@ def home():
             return render_template('homepage.html', patients=patients, error=f"Error: {error_message}")
     else:
         patients = Patient.query.order_by(Patient.date.desc()).all()
-        return render_template('patientpage.html', patients=patients)
+        return render_template('homepage.html', patients=patients)
 
 
 @app.route('/upload', methods=['POST'])
