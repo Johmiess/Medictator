@@ -1,17 +1,32 @@
 styleguide.css
 :root {
-  --body-strong-font-family: "Inter", Helvetica;
+  --body-strong-font-family: "Inter", Helvetica, sans-serif;
   --body-base-font-weight: 400;
-  --body-base-font-size: 16px;
-  --body-base-letter-spacing: 0px;
-  --body-base-line-height: 139.9999976158142%;
+  --body-base-font-size: 1rem;
+  --body-base-letter-spacing: 0;
+  --body-base-line-height: 1.4;
   --body-base-font-style: normal;
   --color-text-default-default: var(--color-primitives-gray-900);
-  --size-space-400: 16px;
-  --size-space-600: 24px;
-  --size-space-300: 12px;
+  --size-space-400: 1rem;
+  --size-space-600: 1.5rem;
+  --size-space-300: 0.75rem;
   --color-primitives-gray-900: rgba(30, 30, 30, 1);
   --color-primitives-white-1000: rgba(255, 255, 255, 1);
+  
+  /* Additional spacing variables */
+  --size-space-200: 0.5rem;
+  --size-space-500: 1.25rem;
+  --size-space-700: 1.75rem;
+  --size-space-800: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :root {
+    --size-space-400: 0.875rem;
+    --size-space-600: 1.25rem;
+    --size-space-300: 0.625rem;
+  }
 }
 
 /*
