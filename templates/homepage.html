@@ -23,7 +23,7 @@
         <div class="content-wrapper">
           <!-- Sidebar -->
           <div class="sidebar">
-            <form action="/" method="POST" class="form-section">
+            <form method="POST" action="{{ url_for('home') }}" class="form-section">
               {% if error %}
               <div class="error-message">
                 {{ error }}
