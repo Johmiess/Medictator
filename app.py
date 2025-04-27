@@ -1,9 +1,9 @@
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, render_template, request, jsonify, redirect, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime, UTC
-from gemini_transcriber import transcribe_audio
+from gemini_transcriber import transcribe_audio, transcribe_word_for_word
 import sqlalchemy as sa
  
 load_dotenv()
@@ -122,7 +122,17 @@ def home():
     #Add a patient
     if request.method == "POST":
         patient_name = request.form['name']
-        patient_age = request.form['age']
+        
+        # Validate age is a number
+        try:
+            patient_age = int(request.form['age'])
+            if patient_age < 0 or patient_age > 120:
+                raise ValueError("Age must be between 0 and 120")
+        except ValueError:
+            return render_template('homepage.html', 
+                                   patients=Patient.query.order_by(Patient.date.desc()).all(),
+                                   error="Error: Age must be a valid number between 0 and 120")
+        
         patient_sex = request.form['sex']
         patient_medical_id = request.form.get('medical_id', '').strip() or None  # Handle empty string as None
         
@@ -160,9 +170,8 @@ def home():
 
 
 @app.route('/upload', methods=['POST'])
-
 def upload_file():
-    print('BACKEDN REACHED:Uploading file to server')
+    print('BACKEND REACHED: Uploading file to server')
     if 'audio' not in request.files:
         print('No file part')
         return jsonify({'error': 'No file part'}), 400
@@ -178,16 +187,23 @@ def upload_file():
     file_path = os.path.join(UPLOAD_FOLDER, filename)
     file.save(file_path)
     
-    # Transcribe the audio
-    print('Transcribing audio')
-    transcription = transcribe_audio(file_path)
+    # Get both types of transcriptions
+    print('Transcribing audio (structured)')
+    structured_transcription = transcribe_audio(file_path)
+    print('Transcribing audio (word-for-word)')
+    word_for_word = transcribe_word_for_word(file_path)
     print('Transcription complete')
     
     return jsonify({
         'success': True, 
         'filename': filename,
-        'transcription': transcription
+        'structured_transcription': structured_transcription,
+        'word_for_word': word_for_word
     })
+
+@app.route('/static/js/<path:filename>')
+def serve_js(filename):
+    return send_from_directory('static/js', filename)
 
 @app.route('/transcribe', methods=['POST'])
 def handle_transcription():
@@ -240,7 +256,14 @@ def patient(id):
         if 'name' in data:
             patient.name = data['name']
         if 'age' in data:
-            patient.age = data['age']
+            # Validate age is a number
+            try:
+                age_value = int(data['age'])
+                if age_value < 0 or age_value > 120:
+                    return jsonify({"error": "Age must be between 0 and 120"}), 400
+                patient.age = age_value
+            except ValueError:
+                return jsonify({"error": "Age must be a valid number"}), 400
         if 'sex' in data:
             patient.sex = data['sex']
         if 'medical_id' in data:
