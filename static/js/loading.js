@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showLoading();
                 setTimeout(() => {
                     window.location.href = this.getAttribute('href');
-                }, 500); // Small delay to ensure loading is visible
+                }, 200); // Reduced delay from 500ms to 200ms
             }
         });
     });
@@ -101,10 +101,10 @@ function startProgress() {
             if (width >= 90) { // Cap at 90% until page actually loads
                 clearInterval(window.progressInterval);
             } else {
-                width += 0.5;
+                width += 2.0; // Increased from 0.5 to 2.0 (4x faster)
                 progressBar.style.width = width + '%';
             }
-        }, 10);
+        }, 5); // Reduced from 10ms to 5ms interval
     }
 }
 

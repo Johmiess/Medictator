@@ -81,7 +81,8 @@ nav {
 }
 
 .logo img {
-    height: 40px;
+    height: 80px;
+    opacity: 0.75;
 }
 
 .nav-links {
@@ -160,12 +161,16 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .hero-image img {
-    max-width: 90%;
-    border-radius: 10px;
+    max-width: 80%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border: 8px solid var(--secondary-color);
 }
 
 /* Features Section */
@@ -292,7 +297,8 @@ footer {
 }
 
 .footer-logo img {
-    height: 40px;
+    height: 60px;
+    opacity: 0.9;
     margin-bottom: 1.5rem;
 }
 
