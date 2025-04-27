@@ -28,7 +28,7 @@
             <div class="subheading" id="patient-age-display">Age: {{ patient.age }}</div>
             <div class="patient-age-input-container" style="display: none;">
               <label for="patient-age-input">Age: </label>
-              <input type="number" class="text-input patient-age-input" id="patient-age-input" value="{{ patient.age }}">
+              <input type="number" min="0" max="120" class="text-input patient-age-input" id="patient-age-input" value="{{ patient.age }}" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
             </div>
             
             <div class="subheading" id="patient-sex-display">Sex: {{ patient.sex }}</div>
@@ -56,6 +56,10 @@
               <button class="mic-button" id="recordButton">
                 <img class="mic-icon" src="../static/img/microphone.png" />
               </button>
+              <input type="file" id="audioFileInput" accept="audio/mp3" style="display: none;" />
+              <button class="upload-button" id="uploadButton">
+                <img class="upload-icon" src="../static/img/downloadfromthecloud.png" />
+              </button>
               <div class="recording-indicator">Recording...</div>
             </div>
             <div class="waveform">
@@ -73,7 +77,7 @@
               </select>
             </div>
             <div class="action-buttons">
-              <button id="edit-toggle-btn" class="action-btn edit-toggle-btn">Edit</button>
+              <button id="edit-toggle-btn" class="action-btn edit-toggle-btn">Edit Patient Info</button>
               <button id="save-btn" class="action-btn save-btn">Save</button>
             </div>
           </div>
@@ -181,6 +185,7 @@
     </div>
     
     <script src="../static/js/app.js"></script>
+    <script src="../static/js/upload-file.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const recordButton = document.getElementById('recordButton');
@@ -296,8 +301,23 @@
         document.getElementById('save-btn').addEventListener('click', function() {
           // Get values from inputs if in edit mode, otherwise use display values
           const name = editMode ? nameInput.value : nameDisplay.textContent;
+          
+          // Get and validate age
+          let age;
+          if (editMode) {
+            age = ageInput.value;
+            // Age input is already type="number" with min/max, but double-check
+            if (!/^\d+$/.test(age) || age < 0 || age > 120) {
+              alert('Age must be a valid number between 0 and 120');
+              return;
+            }
+          } else {
+            // Extract number from display text (e.g., "Age: 42" -> 42)
+            const ageMatch = ageDisplay.textContent.match(/\d+/);
+            age = ageMatch ? ageMatch[0] : '';
+          }
+          
           const medicalId = editMode ? medicalIdInput.value : medicalIdDisplay.textContent.replace('Medical ID: ', '');
-          const age = editMode ? ageInput.value : ageDisplay.textContent.replace('Age: ', '');
           const sex = editMode ? sexInput.value : sexDisplay.textContent.replace('Sex: ', '');
           
           // Combine SOAP notes with separator

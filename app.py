@@ -118,7 +118,17 @@ def home():
     #Add a patient
     if request.method == "POST":
         patient_name = request.form['name']
-        patient_age = request.form['age']
+        
+        # Validate age is a number
+        try:
+            patient_age = int(request.form['age'])
+            if patient_age < 0 or patient_age > 120:
+                raise ValueError("Age must be between 0 and 120")
+        except ValueError:
+            return render_template('homepage.html', 
+                                   patients=Patient.query.order_by(Patient.date.desc()).all(),
+                                   error="Error: Age must be a valid number between 0 and 120")
+        
         patient_sex = request.form['sex']
         patient_medical_id = request.form.get('medical_id', '').strip() or None  # Handle empty string as None
         
@@ -242,7 +252,14 @@ def patient(id):
         if 'name' in data:
             patient.name = data['name']
         if 'age' in data:
-            patient.age = data['age']
+            # Validate age is a number
+            try:
+                age_value = int(data['age'])
+                if age_value < 0 or age_value > 120:
+                    return jsonify({"error": "Age must be between 0 and 120"}), 400
+                patient.age = age_value
+            except ValueError:
+                return jsonify({"error": "Age must be a valid number"}), 400
         if 'sex' in data:
             patient.sex = data['sex']
         if 'medical_id' in data:
