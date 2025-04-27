@@ -588,3 +588,24 @@
     white-space: nowrap;
     font-style: var(--body-base-font-style);
   }
+
+.transcription-area {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    resize: none;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+}
+
+.rectangle-2 {
+    position: relative;
+    min-height: 150px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
