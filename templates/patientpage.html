@@ -79,17 +79,7 @@
           </div>
         </div>
         
-        <!-- Patient History section -->
-        <div class="section-container">
-          <div class="heading">Patient History</div>
-          <div class="content-box" id="patient-history-notes">
-            {% if patient.history %}
-              {{ patient.history }}
-            {% endif %}
-          </div>
-        </div>
-        
-        <!-- SOAP Notes sections -->
+        <!-- Updated Notes sections to match prompt.txt categories -->
         <div class="section-container">
           <div class="heading">Subjective</div>
           <div class="content-box" id="subjective-notes">
@@ -115,7 +105,7 @@
           </div>
         </div>
         <div class="section-container">
-          <div class="heading">Plan</div>
+          <div class="heading">Treatment Plan</div>
           <div class="content-box" id="plan-notes">
             {% if patient.notes %}
               {{ patient.notes.split('||')[3] if '||' in patient.notes and patient.notes.split('||')|length > 3 else '' }}
@@ -238,7 +228,6 @@
         const sexInput = document.getElementById('patient-sex-input');
         
         // SOAP notes and Patient History elements
-        const patientHistory = document.getElementById('patient-history-notes');
         const subjective = document.getElementById('subjective-notes');
         const objective = document.getElementById('objective-notes');
         const assessment = document.getElementById('assessment-notes');
@@ -252,8 +241,8 @@
         // Toggle edit mode button
         const editToggleBtn = document.getElementById('edit-toggle-btn');
         
-        // Set initial editability state for SOAP notes and Patient History (read-only initially)
-        [patientHistory, subjective, objective, assessment, plan].forEach(element => {
+        // Set initial editability state for SOAP notes (read-only initially)
+        [subjective, objective, assessment, plan].forEach(element => {
           element.contentEditable = false;
         });
         
@@ -273,8 +262,8 @@
             sexDisplay.style.display = 'none';
             sexInputContainer.style.display = 'block';
             
-            // Make SOAP notes and Patient History editable
-            [patientHistory, subjective, objective, assessment, plan].forEach(element => {
+            // Make SOAP notes editable
+            [subjective, objective, assessment, plan].forEach(element => {
               element.contentEditable = true;
               element.classList.add('editable');
             });
@@ -292,8 +281,8 @@
             sexDisplay.style.display = 'block';
             sexInputContainer.style.display = 'none';
             
-            // Make SOAP notes and Patient History non-editable
-            [patientHistory, subjective, objective, assessment, plan].forEach(element => {
+            // Make SOAP notes non-editable
+            [subjective, objective, assessment, plan].forEach(element => {
               element.contentEditable = false;
               element.classList.remove('editable');
             });
@@ -311,10 +300,7 @@
           const age = editMode ? ageInput.value : ageDisplay.textContent.replace('Age: ', '');
           const sex = editMode ? sexInput.value : sexDisplay.textContent.replace('Sex: ', '');
           
-          // Get Patient History
-          const history = patientHistory.innerText.trim();
-          
-          // Combine SOAP notes with separator (patientHistory is not part of SOAP)
+          // Combine SOAP notes with separator
           const notes = [
             subjective.innerText.trim(),
             objective.innerText.trim(),
@@ -337,7 +323,6 @@
               age: age,
               sex: sex,
               notes: notes,
-              history: history,
               status: status
             })
           })

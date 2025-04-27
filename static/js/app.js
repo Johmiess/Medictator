@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let audioChunks = [];          // Array to store audio chunks
     let isRecording = false;       // Track recording state
     const recordButton = document.getElementById('recordButton');      // Get button element
-    const microphoneImg = recordButton.querySelector('.microphone');  // Get mic icon
+    const microphoneImg = recordButton.querySelector('.mic-icon');  // Get mic icon
     console.log("init vars initalized");
 
     // Add click handler to record button
@@ -61,31 +61,24 @@ document.addEventListener('DOMContentLoaded', () => {
                         const parsedData = parseTranscription(data.structured_transcription);
                         
                         // Update patient info
-                        const patientName = document.querySelector('.text-wrapper');
-                        const patientAge = document.querySelector('.text-wrapper-2');
-                        const patientSex = document.querySelector('.text-wrapper-3');
+                        const patientName = document.getElementById('patient-name-display');
+                        const patientAge = document.getElementById('patient-age-display');
+                        const patientSex = document.getElementById('patient-sex-display');
                         
                         if (parsedData.patient_name) patientName.textContent = parsedData.patient_name;
                         if (parsedData.patient_age) patientAge.textContent = `Age: ${parsedData.patient_age}`;
                         
-                        // Update SOAP sections
-                        const subjective = document.getElementById('subjective');
-                        const objective = document.getElementById('objective');
-                        const assessment = document.getElementById('assessment');
-                        const plan = document.getElementById('plan');
-                        const patientHistorySection = document.querySelector('.rectangle-3');
+                        // Update sections according to prompt.txt categories
+                        const subjective = document.getElementById('subjective-notes');
+                        const objective = document.getElementById('objective-notes');
+                        const assessment = document.getElementById('assessment-notes');
+                        const plan = document.getElementById('plan-notes');
                         
-                        // Combine relevant sections for each SOAP component
-                        subjective.value = `Chief Complaint: ${parsedData.chief_complaint || 'Not available'}\nMedical History: ${parsedData.medical_history || 'Not available'}`;
-                        objective.value = `Current Medications: ${parsedData.current_medications || 'Not available'}`;
-                        assessment.value = parsedData.assessment || 'Not available';
-                        plan.value = parsedData.treatment_plan || 'Not available';
-
-                        // Update patient history section
-                     
-                        if (patientHistorySection) {
-                            patientHistorySection.innerHTML = `<div class="patient-history-content">${parsedData.medical_history || 'No medical history available'}</div>`;
-                        }
+                        // Update each section with corresponding data
+                        if (subjective) subjective.textContent = parsedData.subjective || 'No subjective information available';
+                        if (objective) objective.textContent = parsedData.objective || 'No objective information available';
+                        if (assessment) assessment.textContent = parsedData.assessment || 'No assessment information available';
+                        if (plan) plan.textContent = parsedData.treatment_plan || 'No treatment plan available';
 
                         // Display word-for-word transcription in a new section or modal
                         // const existingElement = document.querySelector('.word-for-word-transcription');
@@ -96,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         // const wordForWordSection = document.createElement('div');
                         // wordForWordSection.className = 'word-for-word-transcription';
                         // wordForWordSection.innerHTML = `<h3>Full Conversation</h3><pre>${data.word_for_word}</pre>`;
-                        document.body.appendChild(wordForWordSection);
+                        // document.body.appendChild(wordForWordSection);
                     } else {
                         console.error('Upload failed:', data.error);
                     }
@@ -126,9 +119,8 @@ function parseTranscription(transcription) {
         return {
             patient_name: parsedData.patient_name || 'Information not available',
             patient_age: parsedData.patient_age || 'Information not available',
-            chief_complaint: parsedData.chief_complaint || 'Information not available',
-            medical_history: parsedData.medical_history || 'Information not available',
-            current_medications: parsedData.current_medications || 'Information not available',
+            subjective: parsedData.subjective || 'Information not available',
+            objective: parsedData.objective || 'Information not available',
             assessment: parsedData.assessment || 'Information not available',
             treatment_plan: parsedData.treatment_plan || 'Information not available'
         };
@@ -138,9 +130,8 @@ function parseTranscription(transcription) {
         return {
             patient_name: 'Error parsing data',
             patient_age: 'Error parsing data',
-            chief_complaint: 'Error parsing data',
-            medical_history: 'Error parsing data',
-            current_medications: 'Error parsing data',
+            subjective: 'Error parsing data',
+            objective: 'Error parsing data',
             assessment: 'Error parsing data',
             treatment_plan: 'Error parsing data'
         };
