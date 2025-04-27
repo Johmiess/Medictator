@@ -2,126 +2,227 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../static/globals.css" />
     <link rel="stylesheet" href="../static/homepagestyles.css" />
   </head>
   <body>
     <div class="desktop">
-      <div class="overlap-wrapper">
-        <div class="overlap">
-          <div class="overlap-group">
-            <div class="rectangle"></div>
-            <div class="div"></div>
-            <div class="rectangle-2"></div>
-            <div class="rectangle-3"></div>
-            <div class="rectangle-4"></div>
-            <div class="text-wrapper">Full Name</div>
-            <div class="text-wrapper-2">Age</div>
-            <div class="text-wrapper-3">Sex</div>
-            <div class="rectangle-5"></div>
-            <div class="llama-co">Llama &amp; Co.</div>
-            <img class="home" src="../static/img/home.png" />
-            <img class="bookmark" src="../static/img/bookmark.png" />
-            <img class="doorbell" src="../static/img/doorbell.png" />
-            <img class="mask-group-user-boi" src="../static/img/maskgroupuserboi.png" />
-            <div class="text"></div>
-            <div class="text-wrapper-4">Edit</div>
-            <div class="text-wrapper-5">Delete</div>
-            <div class="group">
-              <div class="overlap-2">
-                <div class="text-wrapper-6">New</div>
-                <img class="plus-math" src="../static/img/plusmath.png" />
+      <nav class="navbar">
+        <div class="navbar-container">
+          <div class="logo">Llama &amp; Co.</div>
+          <div class="nav-icons">
+            <a href="#" class="nav-link">
+              <img class="nav-icon" src="../static/img/maskgroupuserboi.png" alt="Profile" />
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="content-container">
+        <div class="content-wrapper">
+          <!-- Sidebar -->
+          <div class="sidebar">
+            <form action="/" method="POST" class="form-section">
+              {% if error %}
+              <div class="error-message">
+                {{ error }}
               </div>
+              {% endif %}
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" name="name" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Medical ID</label>
+                <input type="text" class="form-input" name="medical_id" placeholder="e.g. MED123456" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Age</label>
+                <input type="number" class="form-input" name="age" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sex</label>
+                <select class="form-input" name="sex" required>
+                  <option value="">Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              
+              <div class="action-buttons">
+                <button type="submit" class="btn btn-primary">
+                  <img class="btn-icon" src="../static/img/plusmath.png" alt="Add" />
+                  <span>Add Patient</span>
+                </button>
+              </div>
+            </form>
+            
+            <div class="action-buttons">
+              <button class="btn btn-danger" id="delete-btn">
+                <img class="btn-icon" src="../static/img/trashcan.png" alt="Delete" />
+                <span>Delete</span>
+              </button>
             </div>
-            <img class="edit" src="../static/img/edit.png" />
-            <img class="img" src="../static/img/trashcan.png" />
-            <div class="rectangle-6"></div>
-            <div class="rectangle-7"></div>
-            <div class="rectangle-8"></div>
-            <div class="navbar">
-              <div class="text-wrapper-7">Llama Rama</div>
-              <div class="text-wrapper-8">24</div>
-              <div class="text-wrapper-9">Male</div>
-              <div class="text-wrapper-10">4/20/2025</div>
-              <div class="overlap-group-wrapper">
-                <div class="overlap-group-2">
-                  <div class="rectangle-9"></div>
-                  <div class="ellipse"></div>
-                  <div class="text-wrapper-11">Pending</div>
+          </div>
+          
+          <!-- Main Content -->
+          <div class="main-content">
+            <div class="filter-section">
+              <div class="filter-group">
+                <div class="filter-item filter-active" data-filter="all">
+                  <div class="status-dot status-all"></div>
+                  <span>All</span>
+                </div>
+                <div class="filter-item" data-filter="Pending">
+                  <div class="status-dot status-pending"></div>
+                  <span>Pending</span>
+                </div>
+                <div class="filter-item" data-filter="Completed">
+                  <div class="status-dot status-completed"></div>
+                  <span>Completed</span>
+                </div>
+                <div class="filter-item" data-filter="Updates">
+                  <div class="status-dot status-updates"></div>
+                  <span>Updates</span>
                 </div>
               </div>
             </div>
-            <div class="navbar-2">
-              <div class="text-wrapper-7">Llama Rama</div>
-              <div class="text-wrapper-8">24</div>
-              <div class="text-wrapper-9">Male</div>
-              <div class="text-wrapper-10">4/20/2025</div>
-              <div class="overlap-group-wrapper">
-                <div class="overlap-group-2">
-                  <div class="rectangle-9"></div>
-                  <div class="ellipse"></div>
-                  <div class="text-wrapper-11">Pending</div>
+            
+            <div class="table-header">
+              <div class="header-item">Name</div>
+              <div class="header-item">Medical ID</div>
+              <div class="header-item">Age</div>
+              <div class="header-item">Sex</div>
+              <div class="header-item">Date Created</div>
+              <div class="header-item">Status</div>
+            </div>
+            
+            <div class="patient-list">
+              {% if patients %}
+                {% for patient in patients %}
+                <a href="/patient/{{ patient.id }}" class="patient-item-link">
+                  <div class="patient-item" data-patient-id="{{ patient.id }}" data-status="{{ patient.status }}">
+                    <div class="patient-name">{{ patient.name }}</div>
+                    <div class="patient-medical-id">{{ patient.medical_id or 'N/A' }}</div>
+                    <div class="patient-age">{{ patient.age }}</div>
+                    <div class="patient-sex">{{ patient.sex }}</div>
+                    <div class="patient-date">{{ patient.date.strftime('%m/%d/%Y') }}</div>
+                    <div class="patient-status">
+                      <div class="status-dot status-{{ patient.status.lower() }}"></div>
+                      <span>{{ patient.status }}</span>
+                    </div>
+                  </div>
+                </a>
+                {% endfor %}
+              {% else %}
+                <div class="no-patients">
+                  <p>No patients found. Add a new patient using the form on the left.</p>
                 </div>
-              </div>
-            </div>
-            <div class="group-2">
-              <div class="text-wrapper-7">Llama Rama</div>
-              <div class="text-wrapper-8">24</div>
-              <div class="text-wrapper-9">Male</div>
-              <div class="text-wrapper-10">4/20/2025</div>
-              <div class="overlap-group-wrapper">
-                <div class="overlap-group-2">
-                  <div class="rectangle-9"></div>
-                  <div class="ellipse"></div>
-                  <div class="text-wrapper-11">Pending</div>
-                </div>
-              </div>
-            </div>
-            <div class="group-3">
-              <div class="text-wrapper-7">Llama Rama</div>
-              <div class="text-wrapper-8">24</div>
-              <div class="text-wrapper-9">Male</div>
-              <div class="text-wrapper-10">4/20/2025</div>
-              <div class="overlap-group-wrapper">
-                <div class="overlap-group-2">
-                  <div class="rectangle-9"></div>
-                  <div class="ellipse"></div>
-                  <div class="text-wrapper-11">Pending</div>
-                </div>
-              </div>
+              {% endif %}
             </div>
           </div>
-          <div class="div-wrapper">
-            <div class="overlap-group-3">
-              <div class="ellipse-2"></div>
-              <div class="text-wrapper-12">Pending</div>
-            </div>
-          </div>
-          <div class="overlap-3">
-            <div class="ellipse-3"></div>
-            <div class="text-wrapper-13">All</div>
-          </div>
-          <div class="group-4">
-            <div class="overlap-4">
-              <div class="rectangle-10"></div>
-              <div class="ellipse-4"></div>
-              <div class="text-wrapper-14">Completed</div>
-            </div>
-          </div>
-          <div class="group-5">
-            <div class="overlap-5">
-              <div class="ellipse-5"></div>
-              <div class="text-wrapper-15">Updates</div>
-            </div>
-          </div>
-          <div class="text-wrapper-16">Name</div>
-          <div class="text-2"></div>
-          <div class="text-wrapper-17">Age</div>
-          <div class="text-wrapper-18">Sex</div>
-          <div class="text-wrapper-19">Status</div>
-          <div class="text-wrapper-20">Date Created</div>
         </div>
       </div>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Filter functionality
+        const filterItems = document.querySelectorAll('.filter-item');
+        const patientItems = document.querySelectorAll('.patient-item');
+        
+        filterItems.forEach(item => {
+          item.addEventListener('click', function() {
+            // Remove active class from all filters
+            filterItems.forEach(filter => filter.classList.remove('filter-active'));
+            
+            // Add active class to clicked filter
+            this.classList.add('filter-active');
+            
+            const filterValue = this.dataset.filter;
+            
+            // Filter patients
+            patientItems.forEach(patient => {
+              if (filterValue === 'all' || patient.dataset.status === filterValue) {
+                patient.closest('.patient-item-link').style.display = 'block';
+              } else {
+                patient.closest('.patient-item-link').style.display = 'none';
+              }
+            });
+          });
+        });
+        
+        // Delete button functionality
+        document.getElementById('delete-btn').addEventListener('click', function() {
+          const selectedPatient = document.querySelector('.patient-item.selected');
+          if (selectedPatient) {
+            const patientId = selectedPatient.dataset.patientId;
+            if (confirm('Are you sure you want to delete this patient?')) {
+              fetch(`/patient/${patientId}`, {
+                method: 'DELETE'
+              })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  selectedPatient.closest('.patient-item-link').remove();
+                } else {
+                  alert('Failed to delete patient');
+                }
+              });
+            }
+          } else {
+            alert('Please select a patient first');
+          }
+        });
+        
+        // Make patient items selectable with right-click
+        patientItems.forEach(item => {
+          // Right-click to select without navigating
+          item.addEventListener('contextmenu', function(e) {
+            e.preventDefault(); // Prevent context menu
+            
+            // Remove selected class from all patients
+            patientItems.forEach(patient => patient.classList.remove('selected'));
+            
+            // Add selected class to clicked patient
+            this.classList.add('selected');
+          });
+          
+          // Regular click for selection
+          item.addEventListener('click', function(e) {
+            // Only handle selection if Alt key is pressed (as a modifier)
+            if (e.altKey) {
+              e.preventDefault(); // Prevent navigation if Alt key is pressed
+              
+              // Remove selected class from all patients
+              patientItems.forEach(patient => patient.classList.remove('selected'));
+              
+              // Add selected class to clicked patient
+              this.classList.add('selected');
+            }
+            // Otherwise, default link behavior will take user to patient page
+          });
+        });
+        
+        // Add helpful tooltip
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.textContent = 'Right-click or Alt+click to select for delete.';
+        document.body.appendChild(tooltip);
+        
+        // Hide tooltip after 7 seconds
+        setTimeout(() => {
+          tooltip.style.opacity = '0';
+          tooltip.style.transition = 'opacity 1s ease-out';
+          
+          // Remove from DOM after fade out
+          setTimeout(() => {
+            tooltip.remove();
+          }, 1000);
+        }, 7000);
+      });
+    </script>
   </body>
 </html>
