@@ -1,9 +1,9 @@
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, render_template, request, jsonify, redirect, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime, UTC
-from gemini_transcriber import transcribe_audio
+from gemini_transcriber import transcribe_audio, transcribe_word_for_word
  
 load_dotenv()
 
@@ -45,9 +45,8 @@ def home():
 
 
 @app.route('/upload', methods=['POST'])
-
 def upload_file():
-    print('BACKEDN REACHED:Uploading file to server')
+    print('BACKEND REACHED: Uploading file to server')
     if 'audio' not in request.files:
         print('No file part')
         return jsonify({'error': 'No file part'}), 400
@@ -63,16 +62,23 @@ def upload_file():
     file_path = os.path.join(UPLOAD_FOLDER, filename)
     file.save(file_path)
     
-    # Transcribe the audio
-    print('Transcribing audio')
-    transcription = transcribe_audio(file_path)
+    # Get both types of transcriptions
+    print('Transcribing audio (structured)')
+    structured_transcription = transcribe_audio(file_path)
+    print('Transcribing audio (word-for-word)')
+    word_for_word = transcribe_word_for_word(file_path)
     print('Transcription complete')
     
     return jsonify({
         'success': True, 
         'filename': filename,
-        'transcription': transcription
+        'structured_transcription': structured_transcription,
+        'word_for_word': word_for_word
     })
+
+@app.route('/static/js/<path:filename>')
+def serve_js(filename):
+    return send_from_directory('static/js', filename)
 
 @app.route('/transcribe', methods=['POST'])
 def handle_transcription():

@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mediaRecorder.stop();
             isRecording = false;
             recordButton.classList.remove('recording');  // Remove visual feedback
-       
+            microphoneImg.style.filter = '';  // Reset mic icon
 
             // Handler for when recording stops
             mediaRecorder.onstop = () => {
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const audioUrl = URL.createObjectURL(audioBlob);
                 const formData = new FormData();
                 formData.append('audio', audioBlob, 'recording.mp3');
-                microphoneImg.style.filter = '';  // Reset mic icon
+                
                 // First request: Upload audio file to server
                 console.log('Uploading file to server');
                 // Make POST request to /upload endpoint with audio file
@@ -54,16 +54,49 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('Server response:', data);
                     if (data.success) {
                         console.log('File uploaded successfully:', data.filename);
-                        console.log('Transcription:', data.transcription);
+                        console.log('Structured Data:', data.structured_transcription);
+                        console.log('Word-for-word:', data.word_for_word);
                         
-                        // Parse the transcription into sections
-                        const sections = parseTranscription(data.transcription);
+                        // Parse the JSON transcription
+                        const parsedData = parseTranscription(data.structured_transcription);
                         
-                        // Display each section in its corresponding textarea
-                        document.getElementById('subjective').value = sections.subjective || '';
-                        document.getElementById('objective').value = sections.objective || '';
-                        document.getElementById('assessment').value = sections.assessment || '';
-                        document.getElementById('plan').value = sections.plan || '';
+                        // Update patient info
+                        const patientName = document.querySelector('.text-wrapper');
+                        const patientAge = document.querySelector('.text-wrapper-2');
+                        const patientSex = document.querySelector('.text-wrapper-3');
+                        
+                        if (parsedData.patient_name) patientName.textContent = parsedData.patient_name;
+                        if (parsedData.patient_age) patientAge.textContent = `Age: ${parsedData.patient_age}`;
+                        
+                        // Update SOAP sections
+                        const subjective = document.getElementById('subjective');
+                        const objective = document.getElementById('objective');
+                        const assessment = document.getElementById('assessment');
+                        const plan = document.getElementById('plan');
+                        const patientHistorySection = document.querySelector('.rectangle-3');
+                        
+                        // Combine relevant sections for each SOAP component
+                        subjective.value = `Chief Complaint: ${parsedData.chief_complaint || 'Not available'}\nMedical History: ${parsedData.medical_history || 'Not available'}`;
+                        objective.value = `Current Medications: ${parsedData.current_medications || 'Not available'}`;
+                        assessment.value = parsedData.assessment || 'Not available';
+                        plan.value = parsedData.treatment_plan || 'Not available';
+
+                        // Update patient history section
+                     
+                        if (patientHistorySection) {
+                            patientHistorySection.innerHTML = `<div class="patient-history-content">${parsedData.medical_history || 'No medical history available'}</div>`;
+                        }
+
+                        // Display word-for-word transcription in a new section or modal
+                        // const existingElement = document.querySelector('.word-for-word-transcription');
+                        // if (existingElement) {
+                        //     existingElement.remove();
+                        // }
+                        
+                        // const wordForWordSection = document.createElement('div');
+                        // wordForWordSection.className = 'word-for-word-transcription';
+                        // wordForWordSection.innerHTML = `<h3>Full Conversation</h3><pre>${data.word_for_word}</pre>`;
+                        document.body.appendChild(wordForWordSection);
                     } else {
                         console.error('Upload failed:', data.error);
                     }
@@ -74,47 +107,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             };
         }
-    })
+    });
 });
 
-// Function to parse transcription into sections
+// Function to parse the transcription JSON
 function parseTranscription(transcription) {
-    const sections = {
-        subjective: '',
-        objective: '',
-        assessment: '',
-        plan: ''
-    };
-
-    // Split the transcription by section headers
-    const sectionRegex = /\$\[(.*?)\]\$/g;
-    let currentSection = '';
-    let currentContent = [];
-
-    // Split the transcription into lines and process each line
-    const lines = transcription.split('\n');
-    
-    for (const line of lines) {
-        // Check if line contains a section header
-        const sectionMatch = line.match(sectionRegex);
-        if (sectionMatch) {
-            // If we were processing a previous section, save its content
-            if (currentSection && currentContent.length > 0) {
-                sections[currentSection] = currentContent.join('\n').trim();
-                currentContent = [];
-            }
-            // Start new section
-            currentSection = sectionMatch[1].toLowerCase();
-        } else if (currentSection) {
-            // Add content to current section
-            currentContent.push(line);
-        }
+    try {
+        // Extract the JSON string from the transcription
+        const jsonStr = transcription.substring(
+            transcription.indexOf('{'),
+            transcription.lastIndexOf('}') + 1
+        );
+        
+        // Parse the JSON string into an object
+        const parsedData = JSON.parse(jsonStr);
+        
+        // Return the parsed data with default values for missing fields
+        return {
+            patient_name: parsedData.patient_name || 'Information not available',
+            patient_age: parsedData.patient_age || 'Information not available',
+            chief_complaint: parsedData.chief_complaint || 'Information not available',
+            medical_history: parsedData.medical_history || 'Information not available',
+            current_medications: parsedData.current_medications || 'Information not available',
+            assessment: parsedData.assessment || 'Information not available',
+            treatment_plan: parsedData.treatment_plan || 'Information not available'
+        };
+    } catch (error) {
+        console.error('Error parsing transcription:', error);
+        // Return default values if parsing fails
+        return {
+            patient_name: 'Error parsing data',
+            patient_age: 'Error parsing data',
+            chief_complaint: 'Error parsing data',
+            medical_history: 'Error parsing data',
+            current_medications: 'Error parsing data',
+            assessment: 'Error parsing data',
+            treatment_plan: 'Error parsing data'
+        };
     }
-
-    // Save the last section
-    if (currentSection && currentContent.length > 0) {
-        sections[currentSection] = currentContent.join('\n').trim();
-    }
-
-    return sections;
 }

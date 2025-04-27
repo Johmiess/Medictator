@@ -1,0 +1,7 @@
+Transcription: {
+"patient_name": "John Smith",
+"patient_age": "62",
+"chief_complaint": "chest pain and shortness of breath",
+"medical_history": "hypertension, high cholesterol, previous heart attack 5 years ago",
+"current_medications": "Lisinopril, Atorvastatin, Aspirin"
+}
