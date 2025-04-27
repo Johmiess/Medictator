@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showLoading();
                 setTimeout(() => {
                     window.location.href = this.getAttribute('href');
-                }, 200); // Reduced delay from 500ms to 200ms
+                }, 200);
             }
         });
     });
@@ -60,6 +60,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Hide loading overlay when page is fully loaded
     window.addEventListener('load', function() {
+        hideLoading();
+    });
+
+    // Add event listener for browser back/forward buttons
+    window.addEventListener('popstate', function() {
         hideLoading();
     });
 });
@@ -101,10 +106,10 @@ function startProgress() {
             if (width >= 90) { // Cap at 90% until page actually loads
                 clearInterval(window.progressInterval);
             } else {
-                width += 2.0; // Increased from 0.5 to 2.0 (4x faster)
+                width += 2.0;
                 progressBar.style.width = width + '%';
             }
-        }, 5); // Reduced from 10ms to 5ms interval
+        }, 5);
     }
 }
 
