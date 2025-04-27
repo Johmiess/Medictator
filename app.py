@@ -113,7 +113,11 @@ def create_sample_patients():
         print("Sample patients created successfully")
     
 #Home Page Routes
-@app.route('/', methods=["POST","GET"])
+@app.route('/', methods=["GET"])
+def landing():
+    return render_template('landing.html')
+
+@app.route('/dashboard', methods=["POST","GET"])
 def home():
     #Add a patient
     if request.method == "POST":
@@ -140,7 +144,7 @@ def home():
         try:
             db.session.add(new_patient)
             db.session.commit()
-            return redirect("/")
+            return redirect("/dashboard")
         except Exception as e:
             db.session.rollback()
             error_message = str(e)
