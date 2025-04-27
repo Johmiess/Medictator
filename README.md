@@ -1,72 +1,49 @@
-# LAHACKS Health App - Vue.js Version
+# Medictator – AI-Powered Medical Notes
 
-This application allows recording patient medical information through voice recordings and uses AI to transcribe them into structured SOAP notes.
+**Medictator** is your AI sidekick for medical documentation. Record your voice, and let our app transcribe, structure, and store your notes in the SOAP format—so you can focus on patients, not paperwork.
 
-## Setup Instructions
+---
 
-### Prerequisites
+## 🚀 Features
+
+- 🎤 **Voice-to-Text**: Record patient notes directly in the browser.
+- 🧠 **AI-Powered SOAP Formatting**: Automatically organizes notes into Subjective, Objective, Assessment, and Plan.
+- ☁️ **Cloud Storage**: Securely stores and retrieves patient records.
+- ⚡ **Fast & Intuitive UI**: Modern, responsive interface for clinicians.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend**: Flask, SQLAlchemy
+- **Frontend**: HTML/CSS/JS (Vanilla, no framework)
+- **AI**: Google Gemini API
+- **Database**: SQLite (default, easy setup)
+- **Other**: dotenv for secrets, CORS, Pillow for image handling
+
+---
+
+## 🖥️ Setup & Installation Guide
+
+### 1. Prerequisites
+
 - Python 3.8+
-- Node.js 16+
-- npm or yarn
+- Node.js 16+ (only if you want to use the Vue.js version; not required for Flask/HTML version)
+- pip
 
-### Installation
+### 2. Clone the Repository
 
-1. Clone the repository
-```
-git clone https://github.com/yourusername/lahackshealth.git
-cd lahackshealth
+```bash
+git clone https://github.com/yourusername/medictator.git
+cd medictator
 ```
 
-2. Install Python dependencies
-```
+### 3. Install Python Dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-3. Install Node.js dependencies
-```
-npm install
-```
+### 4. Set Up Environment Variables
 
-4. Create a `.env` file with your Gemini API key
-```
-GEMINI_API_KEY=your_api_key_here
-```
-
-### Running the Application
-
-1. Start the Flask backend server
-```
-python app.py
-```
-
-2. In a separate terminal, start the Vue.js development server
-```
-npm run dev
-```
-
-3. Open your browser and navigate to:
-- Flask app: http://localhost:5000
-- Vue dev server: http://localhost:5173
-
-## Usage
-
-1. Navigate to the patient page
-2. Click the microphone button to start recording
-3. Speak the patient information
-4. Click the microphone button again to stop recording
-5. The application will transcribe the audio and populate the SOAP notes
-
-## Project Structure
-
-- `/static/js/` - Vue.js components and frontend code
-- `/templates/` - HTML templates
-- `/uploads/` - Directory where audio recordings are stored
-- `app.py` - Flask application
-- `gemini_transcriber.py` - Functions for transcribing audio with Google Gemini
-
-## Technologies Used
-
-- Backend: Flask, SQLAlchemy
-- Frontend: Vue.js 3
-- AI: Google Gemini API
-- Build tools: Vite 
+Create a `.env` file in the root directory and add your Gemini API key:
