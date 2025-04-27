@@ -23,29 +23,7 @@
             <div class="loading-bar">
                 <div class="progress" id="progressBar"></div>
             </div>
-            <button class="start-button" id="startButton">Start Dictation</button>
         </div>
     </div>
-    <script>
-        document.getElementById('startButton').addEventListener('click', function() {
-            const progressBar = document.getElementById('progressBar');
-            progressBar.style.width = '0%';
-            
-            // Disable button while loading
-            this.disabled = true;
-            
-            // Simulate progress
-            let width = 0;
-            const interval = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(interval);
-                    this.disabled = false;
-                } else {
-                    width++;
-                    progressBar.style.width = width + '%';
-                }
-            }, 50); // Adjust speed by changing the interval (50ms)
-        });
-    </script>
 </body>
 </html> 

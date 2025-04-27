@@ -262,6 +262,9 @@ def patient(id):
                 return jsonify({"error": f"Medical ID is already in use by another patient"}), 400
             return jsonify({"error": error_message}), 500
 
+@app.route('/loading-content', methods=["GET"])
+def loading_content():
+    return render_template('loading.html')
 
 if __name__ == '__main__':
     with app.app_context():
