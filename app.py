@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime, UTC
@@ -20,9 +20,25 @@ class Patient(db.Model):
 
     def __repr__(self) -> str:
         return f"Task {self.id}"
-@app.route('/')
+    
+#Home Page Routes
+@app.route('/', methods=["POST","GET"])
 def home():
-    return render_template('index.html')
+    #Add a task
+    if request.method == "POST":
+        current_task = request.form['content']
+        new_patient = Patient(content = current_task)
+        try:
+            db.session.add(new_patient)
+            db.session.commit()
+            return redirect("/")
+        except Exception as e:
+            print(f"ERROR:{e}")
+            return f"ERROR:{e}"
+    else:
+        patients = Patient.query.order_by(Patient.name).all()
+        return render_template('patientpage.html', patients=patients)
+
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
