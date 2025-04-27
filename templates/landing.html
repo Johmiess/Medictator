@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medictator - AI-Powered Medical Notes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='landing.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="landing-container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='img/MedictatorLogoWords.png') }}" alt="Medictator Logo">
+                </div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#about">About</a>
+                </div>
+                <a href="/dashboard" class="cta-button">Get Started</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="animate-text">Transform Medical Voice Notes Into Structured Documentation</h1>
+                <p class="animate-text delay-1">Medictator uses AI to transcribe and format your medical notes into the SOAP format, saving you time and improving patient care.</p>
+                <a href="/dashboard" class="cta-button animate-text delay-2">Try Medictator Now</a>
+            </div>
+            <div class="hero-image animate-fade-in">
+                <img src="{{ url_for('static', filename='img/maskgroupmainboi.png') }}" alt="Doctor with Patient">
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2 class="section-title">Powerful Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i class="fas fa-microphone"></i>
+                    <h3>Voice Recognition</h3>
+                    <p>Record your notes with our advanced voice recognition system.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>SOAP Format</h3>
+                    <p>Automatically organizes notes into Subjective, Objective, Assessment, and Plan.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-cloud"></i>
+                    <h3>Cloud Storage</h3>
+                    <p>Securely store and access your patient records from anywhere.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Time Saving</h3>
+                    <p>Reduce documentation time by up to 60% compared to manual entry.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="how-it-works">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Record</h3>
+                    <p>Record your voice notes during or after patient consultations.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Transcribe</h3>
+                    <p>Our AI automatically transcribes your voice to text with high accuracy.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Format</h3>
+                    <p>Notes are structured into SOAP format for clinical documentation.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Save & Share</h3>
+                    <p>Store notes in patient records and share with your team as needed.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="testimonials">
+            <h2 class="section-title">About Medictator</h2>
+            <p class="about-text">Medictator was developed to solve the problem of time-consuming medical documentation. Our team of healthcare professionals and AI experts built this platform to help physicians focus more on patient care and less on paperwork.</p>
+            <div class="cta-container">
+                <a href="/dashboard" class="cta-button pulse">Get Started Now</a>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="{{ url_for('static', filename='img/MedictatorLogoWords.png') }}" alt="Medictator Logo">
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#features">Features</a>
+                        <a href="#how-it-works">How It Works</a>
+                        <a href="/dashboard">Dashboard</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="#">Documentation</a>
+                        <a href="#">Support</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="#about">About Us</a>
+                        <a href="#">Contact</a>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Medictator. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='landing.js') }}"></script>
+</body>
+</html> 

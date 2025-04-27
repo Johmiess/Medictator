@@ -1,0 +1,17 @@
+{
+  "name": "lahackshealth",
+  "version": "1.0.0",
+  "description": "Health application with Vue.js frontend",
+  "main": "static/js/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.3.9"
+  }
+} 
