@@ -28,7 +28,6 @@
 ### 1. Prerequisites
 
 - Python 3.8+
-- Node.js 16+ (only if you want to use the Vue.js version; not required for Flask/HTML version)
 - pip
 
 ### 2. Clone the Repository
