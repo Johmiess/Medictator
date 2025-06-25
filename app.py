@@ -32,14 +32,17 @@ class Patient(db.Model):
 # Function to check and update database schema
 def update_db_schema():
     inspector = sa.inspect(db.engine)
-    columns = [column['name'] for column in inspector.get_columns('patient')]
+    table_names = inspector.get_table_names()
     
     # Create the table if it doesn't exist yet
-    if 'patient' not in inspector.get_table_names():
+    if 'patient' not in table_names:
         db.create_all()
         print("Database initialized with all tables")
         return
-        
+    
+    # Now that we know the table exists, we can inspect its columns
+    columns = [column['name'] for column in inspector.get_columns('patient')]
+    
     # Check if status column exists and add it if needed
     if 'status' not in columns:
         print("Adding 'status' column to patient table...")
